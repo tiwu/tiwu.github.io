@@ -170,8 +170,8 @@ SELECT mean(*) INTO "homeassistant"."rp_1h".:MEASUREMENT FROM "homeassistant"."a
 SELECT mean(*) INTO "homeassistant"."rp_1h".:MEASUREMENT FROM "homeassistant"."autogen"./.*/ WHERE time > now() - 41w and time < now() - 30w GROUP BY time(1h), * FILL(previous)
 SELECT mean(*) INTO "homeassistant"."rp_1h".:MEASUREMENT FROM "homeassistant"."autogen"./.*/ WHERE time > now() - 31w and time < now() - 20w GROUP BY time(1h), * FILL(previous)
 SELECT mean(*) INTO "homeassistant"."rp_1h".:MEASUREMENT FROM "homeassistant"."autogen"./.*/ WHERE time > now() - 21w and time < now() - 10w GROUP BY time(1h), * FILL(previous)
--- TODO
 SELECT mean(*) INTO "homeassistant"."rp_1h".:MEASUREMENT FROM "homeassistant"."autogen"./.*/ WHERE time > now() - 11w and time < now() GROUP BY time(1h), * FILL(previous)
+-- TODO
 
 
 -- Backfill rp_1d
