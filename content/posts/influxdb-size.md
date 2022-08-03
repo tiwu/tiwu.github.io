@@ -86,6 +86,8 @@ Let's revise our strategy here. I was using only the `autogen` DEFAULT retention
 
 * reduce data coming into InfluxDB, by excluding data in influxdb HA config
 * setup retention policies with shorter periods, with downsampled data
+* backfill all data to all retention policies
+* update period of `autogen` after backfilling
 
 ### Reduce HA data sent to InfluxDB
 
@@ -95,9 +97,31 @@ That is consumption/production of my smart meter, production and self-consumptio
 We can achieve this by excluding entities, entity_globs or even whole domains. I did some checks in my current influxdb and chose to use this setup for now.
 
 ```yaml
-
-
+influxdb:
+  host: a0d7b954-influxdb
+  port: 8086
+  database: homeassistant
+  username: !secret influxdb_username
+  password: !secret influxdb_password
+  max_retries: 3
+  default_measurement: state
+  exclude:
+    entity_globs:
+      - '*uptime*'
+      - sensor.weather_*
+      - update.*
+      - camera.*
+      - weather.*
+      - script.*
+    domains:
+      - lock
+      - select
+      - switch
+      - weather
+      - zone
 ```
+
+This will reduce about 80% of useless data being sent to influxdb.
 
 
 ### Setup new retention policies
@@ -115,7 +139,6 @@ I decided for the following setup:
 
 So keep full granularity of incoming data, keeping that for 60 days. That allows me to look closely at something in the full resolution for ~2 months after the facts, that should be plenty.
 Downsampled data with 15 min resolution will be kept for 1 year, as will 1 hour resolution data. Data reduced to 1 day will be kept indefinitely.
-
 
 ### Setup continuous queries
 
@@ -171,7 +194,6 @@ SELECT mean(*) INTO "homeassistant"."rp_1h".:MEASUREMENT FROM "homeassistant"."a
 SELECT mean(*) INTO "homeassistant"."rp_1h".:MEASUREMENT FROM "homeassistant"."autogen"./.*/ WHERE time > now() - 31w and time < now() - 20w GROUP BY time(1h), * FILL(previous)
 SELECT mean(*) INTO "homeassistant"."rp_1h".:MEASUREMENT FROM "homeassistant"."autogen"./.*/ WHERE time > now() - 21w and time < now() - 10w GROUP BY time(1h), * FILL(previous)
 SELECT mean(*) INTO "homeassistant"."rp_1h".:MEASUREMENT FROM "homeassistant"."autogen"./.*/ WHERE time > now() - 11w and time < now() GROUP BY time(1h), * FILL(previous)
--- TODO
 
 
 -- Backfill rp_1d
@@ -181,3 +203,16 @@ SELECT mean(*) INTO "homeassistant"."rp_1d".:MEASUREMENT FROM "homeassistant"."a
 SELECT mean(*) INTO "homeassistant"."rp_1d".:MEASUREMENT FROM "homeassistant"."autogen"./.*/ WHERE time > now() - 31w and time < now() - 20w GROUP BY time(1d), * FILL(previous)
 SELECT mean(*) INTO "homeassistant"."rp_1d".:MEASUREMENT FROM "homeassistant"."autogen"./.*/ WHERE time > now() - 21w and time < now() - 10w GROUP BY time(1d), * FILL(previous)
 SELECT mean(*) INTO "homeassistant"."rp_1d".:MEASUREMENT FROM "homeassistant"."autogen"./.*/ WHERE time > now() - 11w and time < now() GROUP BY time(1d), * FILL(previous)
+```
+
+### Verify downsampled data
+
+__TODO__
+After downsampling it's best to perform some sanity checks on your data before cleaning the old data from the `autogen` RP.
+
+You can check some relevant fields via the InfluxDB addon, or adapt your Grafana dashboards to use the downsampled data for (some of) the graphs.
+
+### Reduce period for DEFAULT RP
+
+Now all data has been backfilled, and our continuous queries are handling downsampling of incoming data, it is safe to update the retention policy on your `autogen` policy.
+I've updated it to 60 days, so all older data will get cleaned.
