@@ -7,8 +7,8 @@ resources:
     src: "rp-overview.png"
     title: RP overview
 ---
-{{< toc >}}
 
+{{< columns size=large >}}
 # Reduce Home Assistant InfluxDB size
 
 ## Intro 
@@ -247,3 +247,9 @@ After the backfill, the data store looks like this:
 So our default `autogen` RP went from 17.6G to 2.3G! That's an 87% reduction in storage usage + the benefit of way faster Grafana dashboards.
 
 {{< img name="rp-overview" lazy=false >}}
+
+<---> <!-- magic separator, between columns -->
+
+{{< toc >}}
+
+{{< /columns >}}
