@@ -105,7 +105,8 @@ I was using only the `autogen` DEFAULT retention policy, with an infinite retent
 After some reading up in the [influxdb](https://docs.influxdata.com/influxdb/v1.8/guides/downsample_and_retain/) and [Home Asisstant](https://www.home-assistant.io/integrations/influxdb/#configure-filter) documentation, came up with the following steps:
 
 * reduce data flowing to InfluxDB, by excluding data in the `influxdb` HA config
-* setup retention policies with shorter periods, with downsampled data
+* setup retention policies with shorter periods
+* setup continuous queries to fill the RPs
 * backfill all data to all retention policies
 * reduce period of `autogen` policy after backfilling all data
 
@@ -221,3 +222,21 @@ Once validated you can move to reducing the period of your default RP to flush o
 
 Now all data has been backfilled, and our continuous queries are handling downsampling of incoming data, it is safe to update the retention policy on your `autogen` policy.
 I've updated it to 60 days, so all older data will get cleaned.
+
+## Results
+
+After the backfill, the data store looks like this:
+
+```bash
+# pwd
+/mnt/data/supervisor/addons/data/a0d7b954_influxdb/influxdb/data/homeassistant
+# du -h -d1
+32.0M	./_series
+44.8M	./rp_15min
+2.3G	./autogen
+20.6M	./rp_1h
+2.4G	.
+
+```
+
+So our default `autogen` RP went from 17.6G to 2.3G! That's an 87% reduction in storage usage + the benefit of way faster Grafana dashboards.
