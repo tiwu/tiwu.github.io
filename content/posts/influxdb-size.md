@@ -2,6 +2,10 @@
 title: "Influxdb Size"
 date: 2022-08-03T04:41:58+02:00
 draft: false
+resources:
+  - name: rp-overview
+    src: "rp-overview.png"
+    title: RP overview
 ---
 {{< toc >}}
 
@@ -241,3 +245,5 @@ After the backfill, the data store looks like this:
 ```
 
 So our default `autogen` RP went from 17.6G to 2.3G! That's an 87% reduction in storage usage + the benefit of way faster Grafana dashboards.
+
+{{< img name="rp-overview" lazy=false >}}
