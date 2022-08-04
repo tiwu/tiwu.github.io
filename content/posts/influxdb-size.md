@@ -3,7 +3,7 @@ title: "Influxdb Size"
 date: 2022-08-03T04:41:58+02:00
 draft: false
 ---
-{{< toc (format=html) >}}
+{{< toc >}}
 
 # Reduce Home Assistant InfluxDB size
 
