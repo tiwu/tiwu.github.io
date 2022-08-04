@@ -1,4 +1,8 @@
 baseURL = 'https://tiwu.github.io/'
 languageCode = 'en-us'
-title = "TiWu's Hugo Pages"
+title = "TiWu's Pages"
 theme = 'hugo-geekdoc'
+# (Optional, default false) Enforce code blocks to always use the dark color theme.
+geekdocDarkModeCode = true
+geekdocRepo = 'https://github.com/tiwu/tiwu.github.io'
+geekdocEditPath = 'edit/master'
