@@ -1,6 +1,7 @@
 ---
 title: "Influxdb Size"
 date: 2022-08-03T04:41:58+02:00
+lastmod: 2022-08-05T02:24:36+02:00
 draft: false
 resources:
   - name: rp-overview
@@ -14,7 +15,7 @@ resources:
 
 ## Intro 
 
-Lately I was running into issues where the recorder stopped recording events, see [other article]().
+Lately I was running into issues where the recorder stopped recording events.
 Some investigation revealed this was most likely caused by a backup locking the database for too long.
 
 That made me venture into the HA shell and find out where all this space was being consumed.
@@ -248,3 +249,5 @@ After the backfill, the data store looks like this:
 So our default `autogen` RP went from 17.6G to 2.3G! That's an 87% reduction in storage usage + the benefit of way faster Grafana dashboards.
 
 {{< img name="rp-overview" lazy=false >}}
+
+Now to see if the reduced total size of the HA install leads to less issues with my backups.
