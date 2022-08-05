@@ -248,7 +248,9 @@ So our default `autogen` RP went from 17.6G to 2.3G! That's an 87% reduction in 
 
 {{< img name="rp-overview" lazy=false >}}
 
-<---> <!-- magic separator, between columns -->
+<--->
+
+### Contents
 
 {{< toc >}}
 
