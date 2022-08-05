@@ -1,7 +1,7 @@
-baseURL = 'https://tiwu.github.io/'
-languageCode = 'en-us'
+baseURL = "https://tiwu.github.io/"
+languageCode = "en-us"
 title = "TiWu's Pages"
-theme = 'hugo-geekdoc'
+theme = "hugo-geekdoc"
 
 # Required to get well formatted code blocks
 pygmentsUseClasses = true
@@ -12,5 +12,6 @@ enableGitInfo = true
 [params]
     # (Optional, default false) Enforce code blocks to always use the dark color theme.
     geekdocDarkModeCode = true
-    geekdocRepo = 'https://github.com/tiwu/tiwu.github.io'
-    geekdocEditPath = 'edit/master'
+    geekdocRepo = "https://github.com/tiwu/tiwu.github.io"
+    geekdocEditPath = "edit/master"
+    geekdocBreadcrumb = true
