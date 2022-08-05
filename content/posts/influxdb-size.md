@@ -1,7 +1,6 @@
 ---
 title: "Influxdb Size"
 date: 2022-08-03T04:41:58+02:00
-lastmod: 2022-08-05T02:24:36+02:00
 draft: false
 resources:
   - name: rp-overview

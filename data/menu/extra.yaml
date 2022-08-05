@@ -1,0 +1,10 @@
+---
+header:
+  - name: GitHub
+    ref: https://github.com/tiwu/tiwu.github.io
+    icon: github
+    external: true
+  - name: My LinkedIn profile
+    ref: "https://www.linkedin.com/in/timwuytens/"
+    icon: "linkedin"
+    external: true
