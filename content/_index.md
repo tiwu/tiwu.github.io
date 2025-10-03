@@ -11,3 +11,6 @@ If it does, give me a shout out.
 Tim
 
 {{< toc-tree >}}
+
+* https://tiwu.github.io/budget-planner-belgie/
+* https://tiwu.github.io/z900-suspension/
